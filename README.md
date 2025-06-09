@@ -59,3 +59,90 @@ Feel free to check out the [Strapi GitHub repository](https://github.com/strapi/
 ---
 
 <sub>🤫 Psst! [Strapi is hiring](https://strapi.io/careers).</sub>
+
+# 手順
+
+## 1.プロジェクト作成
+
+```
+npx create-strapi-app my-cms --quickstart
+cd my-cms
+```
+
+## 2.config変更
+
+config/database.ts
+
+```
+import { parse } from 'pg-connection-string';
+
+const config = parse(process.env.DATABASE_URL || '');
+
+export default ({ env }) => ({
+  connection: {
+    client: 'postgres',
+    connection: {
+      host: config.host,
+      port: Number(config.port),
+      user: config.user,
+      password: config.password,
+      database: config.database,
+      ssl: {
+        rejectUnauthorized: false, // Render PostgreSQL では必要
+      },
+    },
+  },
+});
+```
+
+## 3.Push
+
+```
+git init
+git remote set-url origin https://<USERNAME>:<TOKEN>@github.com/<USERNAME>/<REPOSITORYNAME>.git
+git add .
+git commit -m "Initial Strapi project"
+git push -u origin main
+```
+
+## 4.Render-PostgreSQLのDB作成
+
+- Render にログイン
+
+- 「New +」→「PostgreSQL」
+
+- 名前・リージョン（例：フリープラン）を指定して作成
+
+- 作成後、「Connection > Internal Database URL」 をコピー（.env に使う）
+
+## 5.Render-WebService作成
+
+- Render のダッシュボードから「New +」→「Web Service」
+
+- GitHub リポジトリを選択（Strapi を pushしたもの）
+
+- 設定値を以下のように入力：
+
+| 項目                 | 値                              |
+| ------------------ | ------------------------------ |
+| **Name**           | strapi-cms（任意）                 |
+| **Runtime**        | Node                           |
+| **Build Command**  | `npm install && npm run build` |
+| **Start Command**  | `npm run start`                |
+| **Root Directory** | `.`（またはプロジェクトルート）              |
+| **Instance Type**  | Free（初回学習にはOK）                 |
+
+## 5.環境変数設定
+
+| KEY                | VALUE                                      |
+| ------------------ | ------------------------------------------ |
+| `NODE_ENV`         | `production`                               |
+| `DATABASE_URL`     | Render の PostgreSQL Internal URL           |
+| `APP_KEYS`         | `comma,separated,secure,keys`（4つ程度のランダムキー） |
+| `API_TOKEN_SALT`   | ランダムな文字列                                   |
+| `ADMIN_JWT_SECRET` | ランダムな文字列                                   |
+| `JWT_SECRET`       | ランダムな文字列                                   |
+
+## 6.デプロイ
+サイトアクセス
+
