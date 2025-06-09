@@ -146,3 +146,15 @@ git push -u origin main
 ## 6.デプロイ
 サイトアクセス
 
+
+# エラー対処
+
+```
+Error: Knex: run
+$ npm install pg --save
+Cannot find module 'pg'
+```
+↓
+```
+npm install pg
+```

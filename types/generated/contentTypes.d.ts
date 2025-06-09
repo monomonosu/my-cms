@@ -372,6 +372,7 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
 export interface ApiContentContent extends Struct.CollectionTypeSchema {
   collectionName: 'contents';
   info: {
+    description: '';
     displayName: 'content';
     pluralName: 'contents';
     singularName: 'content';
@@ -390,6 +391,7 @@ export interface ApiContentContent extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
+    testMedia: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     text: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
