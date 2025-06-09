@@ -147,7 +147,9 @@ git push -u origin main
 サイトアクセス
 
 
-# エラー対処
+# トラブル対処
+
+- 下記エラーが出た場合
 
 ```
 Error: Knex: run
@@ -158,3 +160,6 @@ Cannot find module 'pg'
 ```
 npm install pg
 ```
+
+- 開発環境でContent-Type Builderに項目追加する場合
+   - config/database.tsをデフォルトのコードに戻す（根本的に解消する必要ありそう）
